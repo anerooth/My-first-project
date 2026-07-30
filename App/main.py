@@ -14,8 +14,8 @@ class post(BaseModel):
     age: Optional[int] = None
 while True:
     try:
-        conn = psycopg.connect(host='localhost',dbname='My first database',user='postgres',password ='LOVE',cursor_factory=dict_row)
-        cursor = conn.cursor()
+        conn = psycopg.connect(host='localhost',dbname='My first database',user='postgres',password ='LOVE')
+        cursor = conn.cursor(row_factory=dict_row)
         print("database connetion sucessfull")
         break
     except Exception as error:
