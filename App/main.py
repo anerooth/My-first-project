@@ -64,13 +64,12 @@ def create_post(load:post):
 
 
 @app.get("/posts/{id}")
-def get_post(id: int,response: Response):
-    post = find_post(id)
+def get_post(id: int):
+    cursor.execute("""SELECT * FROM posts WHERE id = %s """,(int(id),))
+    post = cursor.fetchone()
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"your post with {id} was not found")
-        # response.status_code = status.HTTP_404_NOT_FOUND
-        # return{f"your post with id {id} was not fucking found"}
+                            detail=f"post with id: {id} was not found")
     return{"data":post}
 
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
