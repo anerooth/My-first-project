@@ -14,7 +14,7 @@ class post(BaseModel):
     age: Optional[int] = None
 while True:
     try:
-        conn = psycopg.connect(dbname='My first database',user='postgres',password="LOVE")
+        conn = psycopg.connect(dbname='My first database',user='postgres',password="LOVE",row_factory=dict_row)
         cursor = conn.cursor()
         print("database connetion sucessfull")
         break
