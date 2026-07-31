@@ -14,8 +14,8 @@ class post(BaseModel):
     age: Optional[int] = None
 while True:
     try:
-        conn = psycopg.connect(host='localhost',dbname='My first database',user='postgres',password ='LOVE')
-        cursor = conn.cursor(row_factory=dict_row)
+        conn = psycopg.connect(dbname='My first database',user='postgres',password="LOVE")
+        cursor = conn.cursor()
         print("database connetion sucessfull")
         break
     except Exception as error:
@@ -43,7 +43,6 @@ def read_root():
 def get_posts():
     cursor.execute("""SELECT * FROM posts""")
     posts = cursor.fetchall()
-    print(posts)
     return{"data":posts}
 
 # @app.get("/posts")
