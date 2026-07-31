@@ -9,9 +9,10 @@ import time
 app = FastAPI()
 
 class post(BaseModel):
-    name: str = "Anerooth"
-    role: str
-    age: Optional[int] = None
+    title: str
+    content: str
+    published: bool = False
+
 while True:
     try:
         conn = psycopg.connect(dbname='My first database',user='postgres',password="LOVE",row_factory=dict_row)
@@ -55,11 +56,12 @@ def fav_song():
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_post(load:post):
-    my_posts.append(load.model_dump)
-    temp = load.dict()
-    temp['id'] = randrange(0,1000)
-    my_posts.append(temp)
-    return{"message":temp}
+    cursor.execute("""INSERT INTO posts (title,content,published) VALUES (%s,%s,%s) RETURNING * """,
+                                                                  (load.title,load.content,load.published))
+    new_post = cursor.fetchone()
+    conn.commit()
+    return{"message":new_post}
+
 
 @app.get("/posts/{id}")
 def get_post(id: int,response: Response):
