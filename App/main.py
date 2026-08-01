@@ -83,15 +83,16 @@ def delete_post(id: int):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 @app.put("/posts/{id}")
-def update_post(id :int,Post : post):
-    index = find_index(id)
-    if index == None:
+def update_post(id :int,load : post):
+    cursor.execute("""UPDATE posts SET title = %s,content = %s,published = %s WHERE id = %s RETURNING *""",
+                                                        (load.title,load.content,load.published,str(id)))
+    conn.commit()
+    updated_post = cursor.fetchone()
+    if updated_post == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"your post with id:{id} was not found")
-    post_dict = Post.dict()
-    post_dict['id'] = index
-    my_posts[index] = post_dict
-    return{"data":post_dict}
+
+    return{"data":updated_post}
 
 
 
