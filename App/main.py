@@ -21,18 +21,6 @@ while True:
         print(f"Error: {error}")
         time.sleep(2)
 
-my_posts = [{"name":"content of post 1","id":0},{"name":"content of post 2","id":1}]
-
-def find_post(id):
-    for p in my_posts:
-        if p['id'] == id:
-            return p
-
-def find_index(id):
-    for i,p in enumerate(my_posts):
-        if (id == p['id']):
-            return i
-
 @app.get("/")
 def read_root():
     return {"Hello":"world"}
@@ -43,13 +31,9 @@ def get_posts():
     posts = cursor.fetchall()
     return{"data":posts}
 
-# @app.get("/posts")
-# def get_posts():
-#     return {"here are your posts"}
-
 @app.get("/songs")
 def fav_song():
-    return{"My fav song is ranjha"}
+    return{"The creators fav song is ranjha"}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_post(load:post):
@@ -90,6 +74,3 @@ def update_post(id :int,load : post):
                             detail=f"your post with id:{id} was not found")
 
     return{"data":updated_post}
-
-
-
