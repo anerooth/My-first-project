@@ -1,8 +1,5 @@
 from fastapi import FastAPI, Response, status, HTTPException
-from fastapi.params import Body
 from pydantic import BaseModel
-from typing import Optional
-from random import randrange
 import psycopg
 from psycopg.rows import dict_row
 import time
