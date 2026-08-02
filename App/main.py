@@ -52,7 +52,7 @@ def create_post(load:post):
     new_post = cursor.fetchone()
     conn.commit()
     return{"message":new_post}
-# fixing git
+
 
 
 @app.get("/posts/{id}")
