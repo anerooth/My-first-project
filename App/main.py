@@ -18,7 +18,7 @@ class post(BaseModel):
 
 while True:
     try:
-        conn = psycopg.connect(dbname='My first database',user='postgres',password="LOVE",row_factory=dict_row)
+        conn = psycopg.connect(dbname='My first database',user='postgres',row_factory=dict_row)
         cursor = conn.cursor()
         print("database connetion sucessfull")
         break
